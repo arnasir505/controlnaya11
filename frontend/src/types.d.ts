@@ -6,6 +6,13 @@ export interface User {
   token: string;
 }
 
+export interface Product {
+  _id: string;
+  title: string;
+  image: string;
+  price: string;
+}
+
 export interface RegisterMutation {
   username: string;
   password: string;
