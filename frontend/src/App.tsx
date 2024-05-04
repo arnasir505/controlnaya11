@@ -4,6 +4,9 @@ import NotFound from './components/NotFound/NotFound';
 import Register from './containers/Register/Register';
 import Login from './containers/Login/Login';
 import NewProduct from './containers/NewProduct/NewProduct';
+import Products from './containers/Products/Products';
+import Sidebar from './components/Sidebar/Sidebar';
+import { Container, Grid } from '@mui/material';
 
 const App = () => {
   return (
@@ -11,15 +14,18 @@ const App = () => {
       <header>
         <Appbar />
       </header>
-      <main>
-        <Routes>
-          <Route path='/' element={'Home'} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/new-product' element={<NewProduct />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </main>
+      <Container>
+        <Grid container sx={{ py: 5 }}>
+          <Sidebar />
+          <Routes>
+            <Route path='/' element={<Products />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/new-product' element={<NewProduct />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </Grid>
+      </Container>
     </>
   );
 };
