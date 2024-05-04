@@ -3,6 +3,14 @@ import axiosApi from '../../axiosApi';
 import { isAxiosError } from 'axios';
 import { unsetUser } from './usersSlice';
 import { RootState } from '../../app/store';
+import {
+  GlobalError,
+  LoginMutation,
+  RegisterLoginResponse,
+  RegisterMutation,
+  User,
+  ValidationError,
+} from '../../types';
 
 export const register = createAsyncThunk<
   User,
