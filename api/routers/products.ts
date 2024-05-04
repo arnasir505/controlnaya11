@@ -4,6 +4,7 @@ import auth, { RequestWithUser } from '../middleware/auth';
 import { ProductMutation } from '../types';
 import { imagesUpload } from '../multer';
 import mongoose from 'mongoose';
+import fs from 'fs';
 
 const productsRouter = express.Router();
 
@@ -66,6 +67,35 @@ productsRouter.get('/:id', async (req, res, next) => {
       return res.status(404).send({ error: 'Not Found' });
     }
     return res.send(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
+productsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const product = await Product.findOne({ _id: id, owner: req.user?.id });
+
+    if (!product) {
+      return res.sendStatus(403);
+    }
+
+    fs.unlink(`../api/public/${product.image}`, (err) => {
+      if (err) {
+        if (err.code === 'ENOENT') {
+          console.error('File does not exist.');
+        } else {
+          throw err;
+        }
+      } else {
+        console.log('File deleted!');
+      }
+    });
+
+    await product.deleteOne();
+    return res.send('Successful delete!');
   } catch (error) {
     next(error);
   }
