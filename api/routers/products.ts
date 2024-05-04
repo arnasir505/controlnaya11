@@ -61,7 +61,7 @@ productsRouter.get('/', async (req, res, next) => {
 productsRouter.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
-    const product = await Product.findOne({ _id: id });
+    const product = await Product.findOne({ _id: id }).populate('owner', 'displayName phoneNumber');
 
     if (!product) {
       return res.status(404).send({ error: 'Not Found' });

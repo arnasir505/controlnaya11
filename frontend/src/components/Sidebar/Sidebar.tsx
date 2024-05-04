@@ -12,6 +12,11 @@ const Sidebar: React.FC = () => {
   return (
     <Grid item xs={12} md={3}>
       <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <Typography sx={{ color: '#388e3c' }}>All products</Typography>
+          </ListItemButton>
+        </ListItem>
         {CATEGORIES.map((category) => (
           <ListItem key={category.name} disablePadding>
             <ListItemButton>

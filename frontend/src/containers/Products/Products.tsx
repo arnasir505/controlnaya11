@@ -48,10 +48,15 @@ const Products: React.FC = () => {
                   sx={{ width: 180, height: 180, objectFit: 'contain' }}
                 />
                 <CardContent>
-                  <Typography variant='h6' color='#000'>
+                  <Typography variant='h5' color='#000'>
                     {product.title}
                   </Typography>
-                  <Typography variant='body1' fontWeight='bold' color='#000'>
+                  <Typography
+                    variant='body1'
+                    fontWeight='bold'
+                    color='#000'
+                    sx={{ mt: 1 }}
+                  >
                     ${product.price} dollars
                   </Typography>
                 </CardContent>

@@ -7,6 +7,7 @@ import NewProduct from './containers/NewProduct/NewProduct';
 import Products from './containers/Products/Products';
 import Sidebar from './components/Sidebar/Sidebar';
 import { Container, Grid } from '@mui/material';
+import ProductPage from './containers/ProductExpanded/ProductExpanded';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
             <Route path='/new-product' element={<NewProduct />} />
+            <Route path='/products/:id' element={<ProductPage />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </Grid>

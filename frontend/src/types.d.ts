@@ -13,6 +13,16 @@ export interface Product {
   price: string;
 }
 
+export interface ProductExpanded extends Product {
+  description: string;
+  owner: {
+    _id: string;
+    displayName: string;
+    phoneNumber: string;
+  };
+  category: string;
+}
+
 export interface RegisterMutation {
   username: string;
   password: string;
