@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchProducts } from './productsThunks';
 import { RootState } from '../../app/store';
 import { Product } from '../../types';
@@ -20,7 +20,11 @@ const initialState: ProductsState = {
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    setCategory: (state, { payload: category }: PayloadAction<string>) => {
+      state.category = category;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -39,6 +43,9 @@ const productsSlice = createSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
+export const { setCategory } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.items;
-export const selectProductsLoading = (state: RootState) => state.products.loading;
+export const selectProductsLoading = (state: RootState) =>
+  state.products.loading;
+export const selectCategory = (state: RootState) => state.products.category;

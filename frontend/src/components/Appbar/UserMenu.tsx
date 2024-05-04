@@ -48,7 +48,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           {loading && (
-            <CircularProgress size={20} sx={{ mr: 1 }} color='warning' />
+            <CircularProgress size={20} sx={{ mr: 1 }} />
           )}
           Log out
         </MenuItem>
