@@ -11,6 +11,7 @@ import {
 } from 'redux-persist';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { usersReducer } from '../store/users/usersSlice';
+import { newProductReducer } from '../store/newProduct/newProductSlice';
 
 const userPersistConfig = {
   key: 'lalafo:users',
@@ -20,6 +21,7 @@ const userPersistConfig = {
 
 const rootReducer = combineReducers({
   users: persistReducer(userPersistConfig, usersReducer),
+  newProduct: newProductReducer
 });
 
 export const store = configureStore({
