@@ -10,11 +10,17 @@ import { CATEGORIES } from '../../constants';
 import { useAppDispatch } from '../../app/hooks';
 import { setCategory } from '../../store/products/productsSlice';
 import { fetchProducts } from '../../store/products/productsThunks';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const fetchProductsByCategory = async (category: string) => {
+    if (pathname !== '/') {
+      navigate('/');
+    }
     dispatch(setCategory(category));
     await dispatch(fetchProducts());
   };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { apiUrl } from '../../constants';
 import { selectUser } from '../../store/users/usersSlice';
@@ -7,20 +7,23 @@ import Progress from '../../components/Progress/Progress';
 import NotFound from '../../components/NotFound/NotFound';
 import { Container, Divider, Typography } from '@mui/material';
 import {
+  selectDeleteProductLoading,
   selectProduct,
   selectProductError,
   selectProductLoading,
 } from '../../store/product/productSlice';
-import { fetchProduct } from '../../store/product/productThunks';
+import { deleteProduct, fetchProduct } from '../../store/product/productThunks';
 import { LoadingButton } from '@mui/lab';
 
 const ProductPage: React.FC = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const product = useAppSelector(selectProduct);
   const loading = useAppSelector(selectProductLoading);
   const user = useAppSelector(selectUser);
   const error = useAppSelector(selectProductError);
+  const deleteLoading = useAppSelector(selectDeleteProductLoading);
 
   const getProduct = async () => {
     if (params.id) {
@@ -32,8 +35,12 @@ const ProductPage: React.FC = () => {
     void getProduct();
   }, [params.id]);
 
-  const onDelete = (id: string) => {
-    console.log(id);
+  const onDelete = async (id: string) => {
+    const confirmDelete = confirm('Delete this product?');
+    if (confirmDelete) {
+      await dispatch(deleteProduct(id));
+      navigate('/');
+    }
   };
 
   let content = <Progress />;
@@ -66,6 +73,7 @@ const ProductPage: React.FC = () => {
             color='error'
             variant='contained'
             onClick={() => onDelete(product._id)}
+            loading={deleteLoading}
           >
             Delete
           </LoadingButton>
