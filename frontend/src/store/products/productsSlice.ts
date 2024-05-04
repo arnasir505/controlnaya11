@@ -48,4 +48,3 @@ export const { setCategory } = productsSlice.actions;
 export const selectProducts = (state: RootState) => state.products.items;
 export const selectProductsLoading = (state: RootState) =>
   state.products.loading;
-export const selectCategory = (state: RootState) => state.products.category;
