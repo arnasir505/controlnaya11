@@ -13,7 +13,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { usersReducer } from '../store/users/usersSlice';
 
 const userPersistConfig = {
-  key: 'forum:users',
+  key: 'lalafo:users',
   storage,
   whitelist: ['user'],
 };
