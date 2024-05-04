@@ -48,6 +48,10 @@ const NewProduct: React.FC = () => {
   };
 
   const onFormSubmit = async (e: React.FormEvent) => {
+    if (Number(newProduct.price) < 0) {
+      alert('Price cannot be less than 0');
+      return;
+    }
     e.preventDefault();
     await dispatch(addNewProduct()).unwrap();
     dispatch(clearForm());
