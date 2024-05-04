@@ -1,6 +1,12 @@
 import React, { useRef } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  clearImage,
+  selectNewProductCreateError,
+  selectNewProductImageName,
+  updateFilename,
+} from '../../store/newProduct/newProductSlice';
+import { Button, Grid, TextField } from '@mui/material';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,6 +18,7 @@ const FileInput: React.FC<Props> = ({ onChange, name, label }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const filename = useAppSelector(selectNewProductImageName);
+  const error = useAppSelector(selectNewProductCreateError);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -30,6 +37,14 @@ const FileInput: React.FC<Props> = ({ onChange, name, label }) => {
     }
   };
 
+  const getFieldError = (fieldName: string) => {
+    try {
+      return error?.errors[fieldName].message;
+    } catch {
+      return undefined;
+    }
+  };
+
   return (
     <>
       <input
@@ -44,17 +59,19 @@ const FileInput: React.FC<Props> = ({ onChange, name, label }) => {
       <Grid container direction='row' spacing={2} alignItems='center'>
         <Grid item xs>
           <TextField
+            required
             fullWidth
-            color='warning'
             inputProps={{ readOnly: true }}
             label={label}
             value={filename}
             onClick={activateInput}
+            error={Boolean(getFieldError('image'))}
+            helperText={getFieldError('image')}
           />
         </Grid>
 
         <Grid item>
-          <Button variant='contained' onClick={activateInput} color='warning'>
+          <Button variant='contained' onClick={activateInput}>
             Browse
           </Button>
         </Grid>

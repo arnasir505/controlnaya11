@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import { ProductMutation, ValidationError } from '../../types';
+import { ValidationError } from '../../types';
 import { blobUrlToFile } from '../../utils';
 import { isAxiosError } from 'axios';
 import { RootState } from '../../app/store';
@@ -11,27 +11,22 @@ export const addNewProduct = createAsyncThunk<
   { state: RootState; rejectValue: ValidationError }
 >('newProduct/add', async (_, { getState, rejectWithValue }) => {
   try {
+    const title = getState().newProduct.data.title;
+    const description = getState().newProduct.data.description;
     const image = getState().newProduct.data.image;
+    const category = getState().newProduct.data.category;
+    const price = getState().newProduct.data.price;
     const token = getState().users.user?.token;
-
-    const productMutation = getState().newProduct.data;
 
     const formData = new FormData();
 
-    const keys = Object.keys(productMutation) as (keyof ProductMutation)[];
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('category', category);
+    formData.append('price', price);
 
-    keys.forEach(async (key) => {
-      if (key === 'image') {
-        const imageAsFile = await blobUrlToFile(image);
-        formData.append('image', imageAsFile);
-      }
-
-      const value = productMutation[key];
-
-      if (value !== null && key !== 'image') {
-        formData.append(key, value);
-      }
-    });
+    const imageAsFile = await blobUrlToFile(image);
+    formData.append('image', imageAsFile);
 
     const config = {
       headers: { Authorization: `Bearer ${token}` },

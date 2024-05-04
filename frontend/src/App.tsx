@@ -3,6 +3,7 @@ import Appbar from './components/Appbar/Appbar';
 import NotFound from './components/NotFound/NotFound';
 import Register from './containers/Register/Register';
 import Login from './containers/Login/Login';
+import NewProduct from './containers/NewProduct/NewProduct';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path='/' element={'Home'} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/new-product' element={<NewProduct />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </main>
