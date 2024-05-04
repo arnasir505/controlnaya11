@@ -57,7 +57,7 @@ const Products: React.FC = () => {
                     color='#000'
                     sx={{ mt: 1 }}
                   >
-                    ${product.price} dollars
+                    ${product.price} USD
                   </Typography>
                 </CardContent>
               </Card>

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Appbar from './components/Appbar/Appbar';
 import NotFound from './components/NotFound/NotFound';
 import Register from './containers/Register/Register';
@@ -10,6 +10,8 @@ import { Container, Grid } from '@mui/material';
 import ProductPage from './containers/ProductExpanded/ProductExpanded';
 
 const App = () => {
+  const { pathname } = useLocation();
+  const exceptions = ['/register', '/login', '/new-product'];
   return (
     <>
       <header>
@@ -17,7 +19,7 @@ const App = () => {
       </header>
       <Container>
         <Grid container sx={{ py: 5 }}>
-          <Sidebar />
+          {exceptions.includes(pathname) ? null : <Sidebar />}
           <Routes>
             <Route path='/' element={<Products />} />
             <Route path='/register' element={<Register />} />

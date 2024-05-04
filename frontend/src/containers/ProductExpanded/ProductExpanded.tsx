@@ -12,6 +12,7 @@ import {
   selectProductLoading,
 } from '../../store/product/productSlice';
 import { fetchProduct } from '../../store/product/productThunks';
+import { LoadingButton } from '@mui/lab';
 
 const ProductPage: React.FC = () => {
   const params = useParams();
@@ -30,6 +31,10 @@ const ProductPage: React.FC = () => {
   useEffect(() => {
     void getProduct();
   }, [params.id]);
+
+  const onDelete = (id: string) => {
+    console.log(id);
+  };
 
   let content = <Progress />;
 
@@ -56,6 +61,15 @@ const ProductPage: React.FC = () => {
         >
           {product.owner.displayName}, {product.owner.phoneNumber}
         </Typography>
+        {user?._id === product.owner._id ? (
+          <LoadingButton
+            color='error'
+            variant='contained'
+            onClick={() => onDelete(product._id)}
+          >
+            Delete
+          </LoadingButton>
+        ) : null}
         <Divider sx={{ my: 2 }} />
       </>
     );
